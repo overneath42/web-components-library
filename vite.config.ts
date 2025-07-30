@@ -1,17 +1,17 @@
 /// <reference types="vitest/config" />
 
-import { resolve } from "path";
 import { defineConfig } from "vite";
-import { readdirSync, statSync, existsSync } from "fs";
-import { join } from "path";
+import { readdirSync, statSync, existsSync, copyFileSync } from "fs";
+import { join, resolve } from "path";
+import { viteStaticCopy } from "vite-plugin-static-copy";
 
 /**
  * Automatically discovers all component directories under `src/components`.
  * A directory is considered a component if it contains an `index.ts` file.
- * @returns {Record<string, string>} An object where keys are component folder names
+ * @returns An object where keys are component folder names
  * and values are the absolute paths to their `index.ts` entry file.
  */
-function getComponentEntries() {
+function getComponentEntries(): Record<string, string> {
   const componentsDir = resolve(__dirname, "src/components");
   const entries: Record<string, string> = {};
 
@@ -64,6 +64,15 @@ export default defineConfig({
 
         // We use 'es' module format for modern web components.
         format: "es",
+
+        chunkFileNames: (chunkInfo) => {
+          // This allows us to customize the naming of chunk files.
+          // If you have shared utilities or common code, you can place them in a specific folder.
+          if (chunkInfo.name === "base-component") {
+            return "shared/base-component.js"; // Place base-component in shared folder
+          }
+          return "assets/[name]-[hash].js"; // Default for other chunks
+        }
       },
     },
     // We want to minify the output in production builds.
@@ -72,4 +81,14 @@ export default defineConfig({
     // Vite's cssCodeSplit is true by default, which is what we need
     // to generate separate CSS files for each entry point that imports CSS.
   },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: resolve(__dirname, "src/components/variables.css"),
+          dest: "", // Copies to the root of the outDir (dist in this case)
+        },
+      ],
+    }),
+  ],
 });

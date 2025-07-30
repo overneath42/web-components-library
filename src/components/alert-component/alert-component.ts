@@ -1,15 +1,9 @@
-import { prependCSS } from "../../utilities/prepend-css";
+import { BaseComponent, RenderOptions } from "../../utilities/base-component";
 import templateContent from "./alert-component.template.html?raw";
 import "./alert-component.css";
 
-class AlertComponent extends HTMLElement {
-  private shadow: ShadowRoot;
+class AlertComponent extends BaseComponent {
   private timerId: number | null = null;
-
-  constructor() {
-    super();
-    this.shadow = this.attachShadow({ mode: "open" });
-  }
 
   static get observedAttributes(): string[] {
     return ["type", "closeable", "self-destruct-in"];
@@ -33,11 +27,13 @@ class AlertComponent extends HTMLElement {
     if (name === "closeable") this.setCloseButtonVisibility();
   }
 
-  private render(): void {
-    this.shadow.innerHTML = templateContent;
-    prependCSS(new URL("./alert-component.css", import.meta.url).href, this.shadow);
-
-    // Add event listener for the close button from the template
+  protected render(): void {
+    super.render({
+      template: templateContent,
+      componentName: "alert-component",
+      moduleUrl: import.meta.url,
+    } as RenderOptions);
+    
     this.shadow
       .querySelector(".close")
       ?.addEventListener("click", () => this.remove());

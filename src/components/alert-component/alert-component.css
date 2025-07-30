@@ -1,35 +1,37 @@
+@import "../variables.css";
+
 .x-alert {
   padding: 0.5rem 1rem; /* Replicates py-sm px-md */
   border-width: 1px;
   border-style: solid;
   border-radius: 0.25rem; /* Replicates rounded */
-  font-family: "Open Sans", sans-serif;
+  font-family: system-ui, sans-serif;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
 
   &--success {
-    background-color: #f4f8f1; /* bg-green-light */
-    border-color: #a0d5ab; /* border-green-medium */
-    color: #1c5c29; /* text-green-dark */
+    background-color: var(--color-green-light);
+    border-color: var(--color-green-medium);
+    color: var(--color-green-dark);
   }
 
   &--info {
-    background-color: #e2e8f0; /* bg-slate */
-    border-color: #3b3f5c; /* border-blue-gray */
-    color: #3b3f5c; /* text-blue-gray */
+    background-color: var(--color-slate);
+    border-color: var(--color-blue-gray);
+    color: var(--color-blue-gray);
   }
 
   &--warning {
-    background-color: #fffaf1; /* bg-yellow-light */
-    border-color: #ffdfa6; /* border-yellow-medium */
-    color: #66460d; /* text-yellow-dark */
+    background-color: var(--color-yellow-light);
+    border-color: var(--color-yellow-medium);
+    color: var(--color-yellow-dark);
   }
 
   &--danger {
-    background-color: #f8e3e3; /* bg-red-light */
-    border-color: #9d272f; /* border-red-medium */
-    color: #7d2828; /* text-red-dark */
+    background-color: var(--color-red-light);
+    border-color: var(--color-red-medium);
+    color: var(--color-red-dark);
   }
 
   &__close {

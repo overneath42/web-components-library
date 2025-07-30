@@ -1,0 +1,136 @@
+@import '../variables.css';
+
+.x-tabs {
+  width: 100%;
+  
+  &__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    background: var(--color-white);
+  }
+
+  &__list-item {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-family-sans);
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--color-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, outline 0.2s;
+    border-radius: 0.375rem 0.375rem 0 0;
+    position: relative;
+    
+    &:hover {
+      color: var(--color-gray-dark);
+      background-color: var(--color-gray-lighter);
+    }
+
+    &:focus {
+      outline: 1px solid var(--color-primary);
+      outline-offset: -1px;
+    }
+
+    &--active {
+      color: var(--color-primary);
+      background-color: var(--color-white);
+      border-bottom-color: var(--color-primary);
+      
+      &:hover {
+        color: var(--color-primary);
+        background-color: var(--color-white);
+      }
+    }
+
+    &[aria-selected="true"] {
+      background-color: var(--color-white);
+      border-bottom: 2px solid var(--color-primary);
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &__panels {
+    width: 100%;
+    background: var(--color-white);
+  }
+
+  &__panel {
+    width: 100%;
+    padding: 1rem 0;
+    font-family: var(--font-family-sans);
+    transition: outline 0.2s ease-in-out;
+    
+    &.hidden {
+      display: none;
+    }
+    
+    &[hidden] {
+      display: none;
+    }
+
+    &:focus {
+      outline: 1px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .x-tabs {
+    &__list {
+      flex-wrap: wrap;
+    }
+
+    &__button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .x-tabs {
+    &__button {
+      border: 1px solid currentColor;
+      
+      &--active {
+        background-color: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .x-tabs {
+    &__button {
+      transition: none;
+    }
+  }
+}
